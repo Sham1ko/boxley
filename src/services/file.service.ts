@@ -1,18 +1,23 @@
 import { S3 } from "@aws-sdk/client-s3";
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
+import {
+  MINIO_DEFAULT_BUCKET,
+  MINIO_ROOT_PASSWORD,
+  MINIO_ROOT_USER,
+} from "../config/config";
 
 const prisma = new PrismaClient();
 const s3 = new S3({
   credentials: {
-    accessKeyId: process.env.MINIO_ROOT_USER || "",
-    secretAccessKey: process.env.MINIO_ROOT_PASSWORD || "",
+    accessKeyId: MINIO_ROOT_USER,
+    secretAccessKey: MINIO_ROOT_PASSWORD,
   },
   endpoint: "http://localhost:9000", // Минимально в среде разработки
   region: "us-east-1", // MinIO не требует региона, но необходимо указать для клиента
   forcePathStyle: true, // MinIO требует использование path-style URL
 });
-const BUCKET_NAME = process.env.MINIO_DEFAULT_BUCKET || "";
+const BUCKET_NAME = MINIO_DEFAULT_BUCKET;
 
 // Функция загрузки файла
 export const uploadFile = async (file: any, userId: string) => {

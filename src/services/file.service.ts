@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { S3 } from "@aws-sdk/client-s3";
 import {
   MINIO_DEFAULT_BUCKET,
+  MINIO_ENDPOINT,
   MINIO_ROOT_PASSWORD,
   MINIO_ROOT_USER,
 } from "../config/config";
@@ -12,7 +13,7 @@ const s3 = new S3({
     accessKeyId: MINIO_ROOT_USER,
     secretAccessKey: MINIO_ROOT_PASSWORD,
   },
-  endpoint: "http://localhost:9000", // Минимально в среде разработки
+  endpoint: MINIO_ENDPOINT,
   region: "us-east-1", // MinIO не требует региона, но необходимо указать для клиента
   forcePathStyle: true, // MinIO требует использование path-style URL
 });

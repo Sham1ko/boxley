@@ -10,7 +10,9 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000/api",
+        // Относительный url: Try it out бьёт в текущий origin — работает
+        // и на localhost:3000, и на boxley.vercel.app
+        url: "/api",
       },
     ],
   },

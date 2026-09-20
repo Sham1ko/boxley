@@ -1,6 +1,6 @@
+import { randomUUID } from "crypto";
 import { S3 } from "@aws-sdk/client-s3";
 import { PrismaClient } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
 import {
   MINIO_DEFAULT_BUCKET,
   MINIO_ROOT_PASSWORD,
@@ -21,7 +21,7 @@ const BUCKET_NAME = MINIO_DEFAULT_BUCKET;
 
 // Функция загрузки файла
 export const uploadFile = async (file: any, userId: string) => {
-  const fileKey = `${uuidv4()}-${file.originalname}`;
+  const fileKey = `${randomUUID()}-${file.originalname}`;
   const params = {
     Bucket: BUCKET_NAME,
     Key: fileKey,

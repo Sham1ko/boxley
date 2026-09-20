@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
-const JWT_SECRET = "your_jwt_secret";
+import { JWT_SECRET } from "../config/config";
 
 export interface CustomRequest extends Request {
   user?: any;

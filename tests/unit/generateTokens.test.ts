@@ -1,6 +1,7 @@
 import setupTestDB from "../utils/setupTestDB";
 import jwt from "jsonwebtoken";
 import * as authService from "../../src/services/auth.service";
+import { JWT_SECRET } from "../../src/config/config";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -31,14 +32,8 @@ describe("Generate Tokens", () => {
     const device = "test-device";
     const tokens = await authService.generateTokens(userId, device);
 
-    const decodedAccessToken = jwt.verify(
-      tokens.accessToken,
-      "your_jwt_secret"
-    );
-    const decodedRefreshToken = jwt.verify(
-      tokens.refreshToken,
-      "your_jwt_secret"
-    );
+    const decodedAccessToken = jwt.verify(tokens.accessToken, JWT_SECRET);
+    const decodedRefreshToken = jwt.verify(tokens.refreshToken, JWT_SECRET);
 
     expect(decodedAccessToken).toHaveProperty("id", userId);
     expect(decodedRefreshToken).toHaveProperty("id", userId);

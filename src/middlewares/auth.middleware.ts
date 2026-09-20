@@ -24,3 +24,15 @@ export const authMiddleware = (
     res.status(401).json({ error: "Invalid token" });
   }
 };
+
+// Доступ к /:id разрешён только владельцу токена
+export const selfMiddleware = (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user?.id !== req.params.id) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  next();
+};

@@ -1,24 +1,27 @@
-// import supertest from "supertest";
-// import app from "../../src/app"; // Предположим, что у вас есть файл app.ts с инициализацией вашего приложения
-// import setupTestDB from "../utils/setupTestDB";
+import supertest from "supertest";
+import app from "../../src/app";
+import setupTestDB from "../utils/setupTestDB";
 
-// setupTestDB();
+setupTestDB();
 
-// describe("User Signup", () => {
-//   it("should register a new user", async () => {
-//     const request = supertest(app); // Создаем объект supertest для тестирования приложения
-//     const response = await request
-//       .post("/auth/signup") // Отправляем POST-запрос на /auth/signup
-//       .send({
-//         id: "testuser",
-//         password: "password123",
-//         device: "test-device",
-//       })
-//       .expect(201); // Ожидаем, что статус ответа будет 201
+describe("Auth: signup", () => {
+  it("should register a new user with a server-generated id", async () => {
+    const response = await supertest(app)
+      .post("/api/auth/signup")
+      .send({ password: "password123", device: "test-device" })
+      .expect(201);
 
-//     // Проверяем, что в ответе есть ожидаемые данные
-//     expect(response.body.user).toHaveProperty("id", "testuser");
-//     expect(response.body).toHaveProperty("accessToken");
-//     expect(response.body).toHaveProperty("refreshToken");
-//   });
-// });
+    expect(response.body.user.id).toEqual(expect.any(String));
+    expect(response.body.user.id.length).toBeGreaterThan(0);
+    expect(response.body.user).not.toHaveProperty("password");
+    expect(response.body).toHaveProperty("accessToken");
+    expect(response.body).toHaveProperty("refreshToken");
+  });
+
+  it("should reject signup without password", async () => {
+    await supertest(app)
+      .post("/api/auth/signup")
+      .send({ device: "test-device" })
+      .expect(400);
+  });
+});

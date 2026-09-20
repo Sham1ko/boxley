@@ -51,10 +51,10 @@ export const uploadFile = async (file: any, userId: string) => {
   return newFile;
 };
 
-// Функция получения файла по ID
-export const getFileById = async (id: number) => {
+// Функция получения файла по ID (только своего)
+export const getFileById = async (id: number, userId: string) => {
   const file = await prisma.file.findUnique({
-    where: { id },
+    where: { id, userId },
   });
   if (!file) throw new Error("File not found");
   return file;
@@ -74,10 +74,10 @@ export const listFilesByUser = async (
   return files;
 };
 
-// Функция удаления файла по ID
-export const deleteFile = async (id: number) => {
+// Функция удаления файла по ID (только своего)
+export const deleteFile = async (id: number, userId: string) => {
   const file = await prisma.file.findUnique({
-    where: { id },
+    where: { id, userId },
   });
   if (!file) throw new Error("File not found");
 
@@ -96,10 +96,10 @@ export const deleteFile = async (id: number) => {
   });
 };
 
-// Функция получения файла по ID для скачивания
-export const downloadFile = async (id: number) => {
+// Функция получения файла по ID для скачивания (только своего)
+export const downloadFile = async (id: number, userId: string) => {
   const file = await prisma.file.findUnique({
-    where: { id },
+    where: { id, userId },
   });
 
   if (!file || !file.filePath) {

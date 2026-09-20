@@ -14,6 +14,11 @@ export const signup = async (data: { password: string; device: string }) => {
     data: {
       password: hashedPassword,
     },
+    select: {
+      id: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
   const tokens = await generateTokens(newUser.id, data.device);
   return { ...tokens, user: newUser };
@@ -70,6 +75,11 @@ export const refreshToken = async (refreshToken: string) => {
 export const getUserInfo = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: { id },
+    select: {
+      id: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
   if (!user) {
     throw new Error("User not found");

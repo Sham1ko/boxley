@@ -5,7 +5,7 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.controller";
-import { authMiddleware } from "../middlewares/auth.middleware";
+import { authMiddleware, selfMiddleware } from "../middlewares/auth.middleware";
 
 const userRouter = Router();
 
@@ -76,7 +76,7 @@ userRouter.post("/", createUser);
  *       404:
  *         description: User not found
  */
-userRouter.get("/:id", authMiddleware, getUserById);
+userRouter.get("/:id", authMiddleware, selfMiddleware, getUserById);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ userRouter.get("/:id", authMiddleware, getUserById);
  *       404:
  *         description: User not found
  */
-userRouter.put("/:id", authMiddleware, updateUser);
+userRouter.put("/:id", authMiddleware, selfMiddleware, updateUser);
 
 /**
  * @swagger
@@ -130,6 +130,6 @@ userRouter.put("/:id", authMiddleware, updateUser);
  *       404:
  *         description: User not found
  */
-userRouter.delete("/:id", authMiddleware, deleteUser);
+userRouter.delete("/:id", authMiddleware, selfMiddleware, deleteUser);
 
 export default userRouter;

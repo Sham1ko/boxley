@@ -14,7 +14,8 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUserById = async (req: CustomRequest, res: Response) => {
   try {
-    const id = req.user.id;
+    // selfMiddleware гарантирует, что :id — это id из токена
+    const id = req.params.id;
     const user = await userService.getUserById(id);
     res.status(200).json(user);
   } catch (error: any) {

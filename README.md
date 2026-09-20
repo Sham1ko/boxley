@@ -41,6 +41,13 @@ Boxley is a pet-project backend that combines two things people actually deploy:
 - [Docker](https://docs.docker.com/get-docker/) with Docker Compose
 - Node.js 20+
 
+### 0. Create your env files
+
+```bash
+cp .env.example .env             # then fill in JWT_SECRET and the MySQL credentials
+cp .env.test.example .env.test   # used by npm test
+```
+
 ### 1. Spin up the infrastructure
 
 Starts MySQL (dev, port `3306`), MySQL (test, port `3307`) and MinIO (`:9000`, console at `:9001`):
@@ -72,9 +79,9 @@ Configure via a local `.env` (or project settings on Vercel for deployment).
 | --------------------------------- | ---------------------------------------------------- |
 | `JWT_SECRET`                      | Secret used to sign access/refresh tokens            |
 | `DATABASE_URL`                    | MySQL connection string (`mysql://user:pass@host:port/db`) |
-| `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD` | Credentials for the S3-compatible store       |
-| `MINIO_DEFAULT_BUCKET`            | Bucket where uploaded files are stored               |
-| `MINIO_ENDPOINT`                  | Store endpoint (defaults to `http://localhost:9000`) |
+| `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | Credentials for the S3-compatible store |
+| `S3_BUCKET`                       | Bucket where uploaded files are stored               |
+| `S3_ENDPOINT`                     | Store endpoint (defaults to `http://localhost:9000`) |
 | `PORT`                            | Local server port (defaults to `3000`)               |
 
 ## 📡 API Overview
@@ -100,7 +107,7 @@ Configure via a local `.env` (or project settings on Vercel for deployment).
 
 ## 🧪 Running Tests
 
-Tests run against the test MySQL (port `3307`) and MinIO from Docker Compose:
+Tests run against the test MySQL (port `3307`) and MinIO from Docker Compose (requires `.env.test` — see step 0):
 
 ```bash
 npx dotenv -e .env.test -- prisma db push   # push schema to the test database
@@ -122,7 +129,7 @@ Vercel has no MySQL or MinIO, so wire up managed counterparts:
 
 1. Push the repository to GitHub.
 2. In Vercel: **Add New Project** → import the repo, name the project `boxley` (gives you `boxley.vercel.app`).
-3. Under **Settings → Environment Variables**, set `JWT_SECRET`, `DATABASE_URL`, `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`, `MINIO_DEFAULT_BUCKET`, `MINIO_ENDPOINT`.
+3. Under **Settings → Environment Variables**, set `JWT_SECRET`, `DATABASE_URL`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_BUCKET`, `S3_ENDPOINT`.
 4. Push the schema to the managed database from your machine:
    ```bash
    DATABASE_URL="<connection string from PlanetScale/Aiven>" npm run db:push

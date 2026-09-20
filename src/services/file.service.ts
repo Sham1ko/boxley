@@ -1,23 +1,23 @@
 import { randomUUID } from "crypto";
 import { S3 } from "@aws-sdk/client-s3";
 import {
-  MINIO_DEFAULT_BUCKET,
-  MINIO_ENDPOINT,
-  MINIO_ROOT_PASSWORD,
-  MINIO_ROOT_USER,
+  S3_ACCESS_KEY_ID,
+  S3_BUCKET,
+  S3_ENDPOINT,
+  S3_SECRET_ACCESS_KEY,
 } from "../config/config";
 import prisma from "../db/prisma";
 
 const s3 = new S3({
   credentials: {
-    accessKeyId: MINIO_ROOT_USER,
-    secretAccessKey: MINIO_ROOT_PASSWORD,
+    accessKeyId: S3_ACCESS_KEY_ID,
+    secretAccessKey: S3_SECRET_ACCESS_KEY,
   },
-  endpoint: MINIO_ENDPOINT,
-  region: "us-east-1", // MinIO не требует региона, но необходимо указать для клиента
-  forcePathStyle: true, // MinIO требует использование path-style URL
+  endpoint: S3_ENDPOINT,
+  region: "us-east-1", // S3-совместимые хранилища регион не требуют, но клиенту он нужен
+  forcePathStyle: true, // path-style URL — и для MinIO, и для R2
 });
-const BUCKET_NAME = MINIO_DEFAULT_BUCKET;
+const BUCKET_NAME = S3_BUCKET;
 
 // Функция загрузки файла
 export const uploadFile = async (file: any, userId: string) => {

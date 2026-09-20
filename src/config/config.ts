@@ -16,12 +16,12 @@ function requireEnv(name: string): string {
 }
 
 export const JWT_SECRET: string = requireEnv("JWT_SECRET");
-export const MINIO_ROOT_USER: string = requireEnv("MINIO_ROOT_USER");
-export const MINIO_ROOT_PASSWORD: string = requireEnv("MINIO_ROOT_PASSWORD");
-export const MINIO_DEFAULT_BUCKET: string = requireEnv("MINIO_DEFAULT_BUCKET");
-// МинIO-совместимый S3 endpoint; по умолчанию локальный MinIO из docker-compose
-export const MINIO_ENDPOINT: string =
-  process.env.MINIO_ENDPOINT || "http://localhost:9000";
+export const S3_ACCESS_KEY_ID: string = requireEnv("S3_ACCESS_KEY_ID");
+export const S3_SECRET_ACCESS_KEY: string = requireEnv("S3_SECRET_ACCESS_KEY");
+export const S3_BUCKET: string = requireEnv("S3_BUCKET");
+// Любое S3-совместимое хранилище (MinIO, R2, ...); по умолчанию локальный MinIO из docker-compose
+export const S3_ENDPOINT: string =
+  process.env.S3_ENDPOINT || "http://localhost:9000";
 
 // В .env DATABASE_URL написан с интерполяцией вида ${MYSQL_USER} —
 // раскрываем ссылки на другие переменные окружения сами

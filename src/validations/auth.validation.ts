@@ -1,7 +1,6 @@
 import Joi from "joi";
 
 const register = Joi.object({
-  id: Joi.string().required(),
   password: Joi.string().required(),
   device: Joi.string().required(),
 });

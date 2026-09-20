@@ -55,19 +55,16 @@ const authRouter = Router();
  *           schema:
  *             type: object
  *             properties:
- *               id:
- *                 type: string
  *               password:
  *                 type: string
  *               device:
  *                 type: string
  *             required:
- *               - id
  *               - password
  *               - device
  *     responses:
  *       201:
- *         description: User created successfully
+ *         description: User created successfully (id is generated server-side)
  *       400:
  *         description: Bad request
  */

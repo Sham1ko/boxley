@@ -7,12 +7,11 @@ const prisma = new PrismaClient();
 const JWT_EXPIRATION = "10m";
 const REFRESH_TOKEN_EXPIRATION = "7d";
 
-// Функция регистрации
-export const signup = async (data: any) => {
+// Функция регистрации (id генерируется на сервере)
+export const signup = async (data: { password: string; device: string }) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const newUser = await prisma.user.create({
     data: {
-      id: data.id,
       password: hashedPassword,
     },
   });

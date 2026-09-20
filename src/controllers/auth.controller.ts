@@ -4,8 +4,8 @@ import * as authService from "../services/auth.service";
 // Регистрация пользователя
 export const signup = async (req: Request, res: Response) => {
   try {
-    const { id, password, device } = req.body;
-    const user = await authService.signup({ id, password, device });
+    const { password, device } = req.body;
+    const user = await authService.signup({ password, device });
     res.status(201).json(user);
   } catch (error: any) {
     res.status(400).json({ error: error.message });

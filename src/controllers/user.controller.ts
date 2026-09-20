@@ -4,8 +4,8 @@ import { CustomRequest } from "../middlewares/auth.middleware";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { phoneOrEmail, password } = req.body;
-    const user = await userService.createUser(phoneOrEmail, password);
+    const { password } = req.body;
+    const user = await userService.createUser(password);
     res.status(201).json(user);
   } catch (error: any) {
     res.status(400).json({ error: error.message });

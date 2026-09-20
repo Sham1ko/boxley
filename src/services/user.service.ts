@@ -3,11 +3,10 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-export const createUser = async (id: string, password: string) => {
+export const createUser = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({
     data: {
-      id,
       password: hashedPassword,
     },
   });

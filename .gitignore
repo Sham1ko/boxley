@@ -25,6 +25,7 @@ docker-compose.override.yml
 # Prisma
 prisma/.env
 prisma/migrations/
+src/generated/
 
 # IDEs and editors
 .vscode/

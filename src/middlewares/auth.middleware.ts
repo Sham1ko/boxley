@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/config";
 
-export interface CustomRequest extends Request {
+export interface CustomRequest<P = ParamsDictionary> extends Request<P> {
   user?: any;
 }
 

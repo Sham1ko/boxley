@@ -2,10 +2,8 @@ import setupTestDB from "../utils/setupTestDB";
 import jwt from "jsonwebtoken";
 import * as authService from "../../src/services/auth.service";
 import { JWT_SECRET } from "../../src/config/config";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../src/db/prisma";
 import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient();
 
 setupTestDB();
 

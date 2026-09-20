@@ -12,7 +12,7 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserById = async (req: CustomRequest, res: Response) => {
+export const getUserById = async (req: CustomRequest<{ id: string }>, res: Response) => {
   try {
     // selfMiddleware гарантирует, что :id — это id из токена
     const id = req.params.id;
@@ -23,7 +23,7 @@ export const getUserById = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const id = req.params.id;
     const updateData = req.body;
@@ -34,7 +34,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const id = req.params.id;
     await userService.deleteUser(id);

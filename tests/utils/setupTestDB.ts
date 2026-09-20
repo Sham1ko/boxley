@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { execSync } from "child_process";
-
-const prisma = new PrismaClient();
+import prisma from "../../src/db/prisma";
 
 const runMigrations = () => {
   try {

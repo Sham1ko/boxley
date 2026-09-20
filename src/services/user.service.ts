@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient();
+import prisma from "../db/prisma";
 
 export const createUser = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, 10);

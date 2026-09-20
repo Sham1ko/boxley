@@ -1,13 +1,12 @@
 import { randomUUID } from "crypto";
 import { S3 } from "@aws-sdk/client-s3";
-import { PrismaClient } from "@prisma/client";
 import {
   MINIO_DEFAULT_BUCKET,
   MINIO_ROOT_PASSWORD,
   MINIO_ROOT_USER,
 } from "../config/config";
+import prisma from "../db/prisma";
 
-const prisma = new PrismaClient();
 const s3 = new S3({
   credentials: {
     accessKeyId: MINIO_ROOT_USER,
@@ -53,7 +52,7 @@ export const uploadFile = async (file: any, userId: string) => {
 
 // Функция получения файла по ID (только своего)
 export const getFileById = async (id: number, userId: string) => {
-  const file = await prisma.file.findUnique({
+  const file = await prisma.file.findFirst({
     where: { id, userId },
   });
   if (!file) throw new Error("File not found");
@@ -76,7 +75,7 @@ export const listFilesByUser = async (
 
 // Функция удаления файла по ID (только своего)
 export const deleteFile = async (id: number, userId: string) => {
-  const file = await prisma.file.findUnique({
+  const file = await prisma.file.findFirst({
     where: { id, userId },
   });
   if (!file) throw new Error("File not found");
@@ -98,7 +97,7 @@ export const deleteFile = async (id: number, userId: string) => {
 
 // Функция получения файла по ID для скачивания (только своего)
 export const downloadFile = async (id: number, userId: string) => {
-  const file = await prisma.file.findUnique({
+  const file = await prisma.file.findFirst({
     where: { id, userId },
   });
 

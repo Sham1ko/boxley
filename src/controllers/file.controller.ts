@@ -19,7 +19,7 @@ export const uploadFile = async (req: any, res: Response) => {
   }
 };
 
-export const getFileById = async (req: CustomRequest, res: Response) => {
+export const getFileById = async (req: CustomRequest<{ id: string }>, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
     const file = await fileService.getFileById(id, req.user.id);
@@ -49,7 +49,7 @@ export const listFiles = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export const deleteFile = async (req: CustomRequest, res: Response) => {
+export const deleteFile = async (req: CustomRequest<{ id: string }>, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
     await fileService.deleteFile(id, req.user.id);
@@ -64,7 +64,7 @@ export const deleteFile = async (req: CustomRequest, res: Response) => {
 };
 
 // Контроллер для скачивания файла
-export const downloadFile = async (req: CustomRequest, res: Response) => {
+export const downloadFile = async (req: CustomRequest<{ id: string }>, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
 
